@@ -1,0 +1,91 @@
+<html>
+  <head>
+   		<meta charset='utf-8' />
+		<title>Utah Avalanche Center Selected Touring Route</title>
+		<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+		<style>
+			body { margin:0; padding:0; }
+			#map { position:absolute; top:0; bottom:0; width:100%; }
+			h2 {margin: 3px; font-size: 1.2em;}
+			h3 {margin: 3px;}
+			p {margin: 3px; padding: 3px}
+			.map-overlay {position: absolute; bottom: 0; right: 0; background: rgba(255, 255, 255, 0.8); margin-right: 20px; font-family: Arial, sans-serif; overflow: auto; border-radius: 3px;}
+			#features {top: 0; height: 165px; margin-top: 10px; width: 410px;}
+			#legend {padding: 10px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); line-height: 18px; height: 100px; margin-bottom: 40px; width: 200px;}
+			.legend-key {display: inline-block; border-radius: 20%; width: 10px; height: 10px; margin-right: 5px;}
+			.mapboxgl-popup-content {max-height: 300px; max-width: 350px; overflow: scroll;}
+			#menu {position: absolute; background: #fff; padding: 10px; font-family: Arial, sans-serif; margin-top: 5px; margin-left: 5px;}
+		</style>
+  </head>
+
+  <body>
+   		
+		<div id='map'></div>
+
+		<div class='map-overlay' id='features'><h2>Utah Avalanche Center Selected Touring Routes</h2><div id='pd'>
+			<p><b>Click on a route to view its properties.</b><br />
+   			<br />
+   			The map below displays... ect... placeholder... ect... </p></div></div>
+		
+		<div class='map-overlay' id='legend'>
+  			<div class='legend-title'><p><b>Legend</b></p></div>
+    			<p>Green: ... <br>
+    			Yellow: ...<br>
+			ect... </p>
+		</div>
+
+		<div id='menu'>
+			<input id='ckfllczq94fiw19po6ngruhhe' type='radio' name='rtoggle' value='cjqh2wfydlhuh2smyvu59yiog' checked='checked'>
+			<label for='ckfllczq94fiw19po6ngruhhe'>Topographic</label>
+			<input id='ckfq26afe1hyh19pi0rkfbul5' type='radio' name='rtoggle' value='cjqmv15kcptzq2sojwhjbxsht'>
+			<label for='ckfq26afe1hyh19pi0rkfbul5'>Satellite</label>
+		</div>
+		
+   <script>
+     			mapboxgl.accessToken = 'pk.eyJ1IjoidGFsdHl0b3BvIiwiYSI6ImNqbDZ1ZHJkcDAydmczcG51NWM1b2gwMzAifQ.Pk_hS4XNsiWeZ7tyMT8a9w';
+			
+			var filterGroup = document.getElementById('filter-group');
+			
+			var map = new mapboxgl.Map({
+				container: 'map',
+				style: 'mapbox://styles/taltytopo/ckfllczq94fiw19po6ngruhhe',
+				center: [-111.65, 40.625],
+				zoom: 11.45
+			});
+			
+			var layerList = document.getElementById('menu');
+			var inputs = layerList.getElementsByTagName('input');
+			
+			function switchLayer(layer) {
+				var layerId = layer.target.id;
+				map.setStyle('mapbox://styles/taltytopo/' + layerId);
+			}
+			
+			for (var i = 0; i < inputs.length; i++) {
+				inputs[i].onclick = switchLayer;
+			}
+			
+			map.on('click', 'uacselectedtouringroutes-1njr5c', function(e) {
+				new mapboxgl.Popup()
+				.setLngLat(e.lngLat)
+				.setHTML('<h3>' + e.features[0].properties.Name + '<br />' + e.features[0].properties.Rating +
+					'</h3><p>' + '<b>' + "Distance: " + '</b>' + e.features[0].properties.MileNoElev + " miles" + '<br />' +
+					'<b>' + "Elevation Gain: " + '</b>' + e.features[0].properties.Elev_Gain + " ft" + '<br />' +
+					'<b>' + "Starting Elevation: " + '</b>' + e.features[0].properties.Start_Elev + " ft, " + '<b>' + "End Elevation: " + '</b>' + e.features[0].properties.End_Elev + " ft" + '<br />' +
+					'<b>' + "Dogs Allowed?: " + '</b>' + e.features[0].properties.Dog + '<br />' +
+					'<b>' + "Description: " + '</b>' + e.features[0].properties.Descrpt + '</p>')
+				.addTo(map);
+			});
+			
+			map.on('mouseenter', 'uacselectedtouringroutes-1njr5c', function() {
+				map.getCanvas().style.cursor = 'pointer';
+			});
+			
+			map.on('mouseleave', 'uacselectedtouringroutes-1njr5c', function() {
+				map.getCanvas().style.cursor = '';
+			});
+   </script>
+  </body>
+</html>
